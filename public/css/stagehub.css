@@ -1,0 +1,142 @@
+:root {
+    --stagehub-primary: #7c3aed;
+    --stagehub-primary-dark: #6d28d9;
+    --stagehub-blue: #2563eb;
+    --stagehub-green: #16a34a;
+    --stagehub-bg: #f1f5f9;
+    --stagehub-text: #1e293b;
+    --stagehub-muted: #64748b;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--stagehub-bg);
+    color: var(--stagehub-text);
+}
+
+.btn-stagehub {
+    background-color: var(--stagehub-primary);
+    border-color: var(--stagehub-primary);
+    color: #fff;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.25rem;
+}
+
+.btn-stagehub:hover {
+    background-color: var(--stagehub-primary-dark);
+    border-color: var(--stagehub-primary-dark);
+    color: #fff;
+}
+
+.btn-stagehub-blue {
+    background-color: var(--stagehub-blue);
+    border-color: var(--stagehub-blue);
+    color: #fff;
+}
+
+.btn-stagehub-blue:hover {
+    background-color: #1d4ed8;
+    color: #fff;
+}
+
+.btn-stagehub-green {
+    background-color: var(--stagehub-green);
+    border-color: var(--stagehub-green);
+    color: #fff;
+}
+
+.card-stagehub {
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.sidebar-nav .nav-link {
+    color: var(--stagehub-muted);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.sidebar-nav .nav-link.active {
+    background-color: #ede9fe;
+    color: var(--stagehub-primary);
+    font-weight: 500;
+}
+
+.sidebar-nav .nav-link.active-green {
+    background-color: #dcfce7;
+    color: var(--stagehub-green);
+}
+
+.sidebar-nav .nav-link.active-blue {
+    background-color: #dbeafe;
+    color: var(--stagehub-blue);
+}
+
+.badge-status-en_attente { background: #fef3c7; color: #92400e; }
+.badge-status-acceptee, .badge-status-validee, .badge-status-active { background: #dcfce7; color: #166534; }
+.badge-status-refusee { background: #fee2e2; color: #991b1b; }
+.badge-status-en_stage { background: #dbeafe; color: #1e40af; }
+.badge-status-en_recherche { background: #fef3c7; color: #92400e; }
+.badge-status-stage_termine { background: #dcfce7; color: #166534; }
+
+.hero-section {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.feature-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.profile-card {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e2e8f0;
+}
+
+.profile-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+}
+
+.auth-card {
+    max-width: 420px;
+    margin: 2rem auto;
+}
+
+.progress-stagehub {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e2e8f0;
+}
+
+.progress-stagehub .progress-bar {
+    background-color: var(--stagehub-primary);
+}
+
+.navbar-stagehub {
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.stat-card {
+    padding: 1.5rem;
+    border-radius: 1rem;
+}
+
+.stat-card .stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
