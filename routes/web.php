@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\CandidatureController as AdminCandidature;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\DepartementController as AdminDepartement;
 use App\Http\Controllers\Admin\EntrepriseController as AdminEntreprise;
+use App\Http\Controllers\Admin\EvaluationController as AdminEvaluation;
 use App\Http\Controllers\Admin\EtudiantController as AdminEtudiant;
 use App\Http\Controllers\Admin\OffreController as AdminOffre;
 use App\Http\Controllers\Admin\RapportController as AdminRapport;
@@ -21,6 +23,7 @@ use App\Http\Controllers\Entreprise\OffreController as EntOffre;
 use App\Http\Controllers\Entreprise\StagiaireController as EntStagiaire;
 use App\Http\Controllers\Etudiant\CandidatureController as EtuCandidature;
 use App\Http\Controllers\Etudiant\DashboardController as EtuDashboard;
+use App\Http\Controllers\Etudiant\EvaluationController as EtuEvaluation;
 use App\Http\Controllers\Etudiant\OffreController as EtuOffre;
 use App\Http\Controllers\Etudiant\ProfilController as EtuProfil;
 use App\Http\Controllers\Etudiant\RapportController as EtuRapport;
@@ -52,9 +55,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/etudiants', [AdminEtudiant::class, 'index'])->name('etudiants.index');
         Route::get('/etudiants/{etudiant}', [AdminEtudiant::class, 'show'])->name('etudiants.show');
         Route::get('/offres', [AdminOffre::class, 'index'])->name('offres.index');
+        Route::get('/offres/create', [AdminOffre::class, 'create'])->name('offres.create');
+        Route::post('/offres', [AdminOffre::class, 'store'])->name('offres.store');
         Route::post('/offres/{offre}/approuver', [AdminOffre::class, 'approuver'])->name('offres.approuver');
         Route::post('/offres/{offre}/refuser', [AdminOffre::class, 'refuser'])->name('offres.refuser');
         Route::post('/offres/{offre}/desactiver', [AdminOffre::class, 'desactiver'])->name('offres.desactiver');
+        Route::get('/candidatures', [AdminCandidature::class, 'index'])->name('candidatures.index');
+        Route::post('/candidatures/{candidature}/transmettre', [AdminCandidature::class, 'transmettre'])->name('candidatures.transmettre');
+        Route::post('/candidatures/{candidature}/refuser', [AdminCandidature::class, 'refuser'])->name('candidatures.refuser');
+        Route::get('/evaluations', [AdminEvaluation::class, 'index'])->name('evaluations.index');
+        Route::post('/evaluations/{evaluation}/valider', [AdminEvaluation::class, 'valider'])->name('evaluations.valider');
         Route::get('/users', [AdminUser::class, 'index'])->name('users.index');
         Route::post('/users/{user}/toggle', [AdminUser::class, 'toggleActive'])->name('users.toggle');
         Route::get('/departements', [AdminDepartement::class, 'index'])->name('departements.index');
@@ -90,6 +100,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/offres/{offre}/candidater', [EtuCandidature::class, 'store'])->name('candidatures.store');
         Route::get('/rapport', [EtuRapport::class, 'index'])->name('rapport.index');
         Route::post('/rapport', [EtuRapport::class, 'store'])->name('rapport.store');
+        Route::get('/evaluations', [EtuEvaluation::class, 'index'])->name('evaluations.index');
         Route::get('/profil', [EtuProfil::class, 'edit'])->name('profil.edit');
         Route::put('/profil', [EtuProfil::class, 'update'])->name('profil.update');
     });

@@ -45,6 +45,7 @@ class OffreController extends Controller
             'domaine' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'competences_requises' => 'nullable|string',
+            'quota_stagiaires' => 'required|integer|min:1|max:50',
         ]);
 
         $offre = $entreprise->offresStage()->create([

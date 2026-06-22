@@ -5,10 +5,12 @@
 @section('content')
 <section class="hero-section">
     <div class="container">
+        <img src="{{ asset('images/udbl-logo.png') }}" alt="UDBL" class="udbl-logo mb-3" style="height:80px;">
         <h1 class="display-5 fw-bold mb-3">Plateforme de Gestion de Stages</h1>
-        <p class="lead text-muted mb-4 mx-auto" style="max-width: 700px;">
-            Connectez les étudiants, les entreprises et les établissements scolaires pour une gestion simplifiée et efficace des stages
+        <p class="lead text-muted mb-2 mx-auto" style="max-width: 700px;">
+            Université Don Bosco de Lubumbashi — Connectez les étudiants, les entreprises et l'établissement pour une gestion efficace des stages
         </p>
+        <p class="text-primary fw-semibold mb-4">Solidarité — Innovation — Travail</p>
         <a href="{{ route('profil.select') }}" class="btn btn-stagehub btn-lg px-5">Commencer maintenant</a>
     </div>
 </section>

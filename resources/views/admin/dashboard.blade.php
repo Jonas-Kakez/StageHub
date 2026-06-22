@@ -3,17 +3,17 @@
 @section('title', 'Administration')
 
 @php
-    $dashboardTitle = 'StageHub - Administration';
+    $dashboardTitle = 'Bureau de stage UDBL';
     $navColor = 'green';
     $active = 'dashboard';
     $sidebarItems = [
         ['key' => 'dashboard', 'label' => 'Vue d\'ensemble', 'icon' => 'bi-bar-chart-fill', 'url' => route('admin.dashboard'), 'activeClass' => 'active-green'],
+        ['key' => 'candidatures', 'label' => 'Candidatures', 'icon' => 'bi-envelope', 'url' => route('admin.candidatures.index'), 'activeClass' => 'active-green'],
         ['key' => 'etudiants', 'label' => 'Étudiants', 'icon' => 'bi-mortarboard', 'url' => route('admin.etudiants.index'), 'activeClass' => 'active-green'],
         ['key' => 'entreprises', 'label' => 'Entreprises', 'icon' => 'bi-building', 'url' => route('admin.entreprises.index'), 'activeClass' => 'active-green'],
         ['key' => 'offres', 'label' => 'Stages', 'icon' => 'bi-briefcase', 'url' => route('admin.offres.index'), 'activeClass' => 'active-green'],
+        ['key' => 'evaluations', 'label' => 'Évaluations', 'icon' => 'bi-star', 'url' => route('admin.evaluations.index'), 'activeClass' => 'active-green'],
         ['key' => 'rapports', 'label' => 'Rapports', 'icon' => 'bi-graph-up', 'url' => route('admin.rapports.index'), 'activeClass' => 'active-green'],
-        ['key' => 'users', 'label' => 'Utilisateurs', 'icon' => 'bi-people', 'url' => route('admin.users.index'), 'activeClass' => 'active-green'],
-        ['key' => 'departements', 'label' => 'Départements', 'icon' => 'bi-diagram-3', 'url' => route('admin.departements.index'), 'activeClass' => 'active-green'],
     ];
 @endphp
 
@@ -64,26 +64,29 @@
             <div class="progress mb-3" style="height:8px;">
                 <div class="progress-bar bg-success" style="width:{{ $stats['taux_placement'] }}%"></div>
             </div>
-            <div class="small text-muted">Stages complétés: <strong>{{ $stats['stages_completes'] }}</strong></div>
+            <div class="small text-muted">Candidatures en attente: <strong>{{ $stats['candidatures_en_attente'] ?? 0 }}</strong></div>
         </div>
         <div class="card card-stagehub p-4 mt-4">
-            <h6 class="fw-bold mb-3">Statistiques</h6>
+            <h6 class="fw-bold mb-3">Domaines les plus demandés</h6>
             <canvas id="statsChart" height="200"></canvas>
         </div>
     </div>
     <div class="col-md-6">
-        <div class="card card-stagehub p-4">
-            <h6 class="fw-bold mb-3">Actions récentes</h6>
-            @foreach($recentEntreprises->take(3) as $e)
-                <div class="d-flex align-items-center gap-2 mb-3 small">
-                    <i class="bi bi-building text-primary"></i>
-                    <span>Nouvelle entreprise — {{ $e->nom }}</span>
+        <div class="card card-stagehub p-4 mb-4">
+            <h6 class="fw-bold mb-3">Étudiants par entreprise</h6>
+            @foreach($statsParEntreprise ?? [] as $row)
+                <div class="d-flex justify-content-between small mb-2">
+                    <span>{{ $row['entreprise']?->nom ?? '—' }}</span>
+                    <strong>{{ $row['total'] }}</strong>
                 </div>
             @endforeach
-            @foreach($recentEtudiants->take(3) as $e)
-                <div class="d-flex align-items-center gap-2 mb-3 small">
-                    <i class="bi bi-person-fill text-success"></i>
-                    <span>Nouvelle inscription — {{ $e->user->name }}</span>
+        </div>
+        <div class="card card-stagehub p-4">
+            <h6 class="fw-bold mb-3">Historique des actions</h6>
+            @foreach($historiqueActions ?? [] as $action)
+                <div class="d-flex align-items-center gap-2 mb-2 small">
+                    <i class="bi bi-clock-history text-primary"></i>
+                    <span><strong>{{ $action->action }}</strong> — {{ $action->candidature?->etudiant?->user?->name ?? 'N/A' }} ({{ $action->created_at->format('d/m/Y H:i') }})</span>
                 </div>
             @endforeach
         </div>
@@ -97,10 +100,7 @@ new Chart(document.getElementById('statsChart'), {
     type: 'bar',
     data: {
         labels: {{ json_encode($chartData['labels']) }},
-        datasets: [
-            { label: 'Candidatures', data: {{ json_encode($chartData['candidatures']) }}, backgroundColor: '#7c3aed' },
-            { label: 'Affectations', data: {{ json_encode($chartData['affectations']) }}, backgroundColor: '#16a34a' }
-        ]
+        datasets: [{ label: 'Offres par domaine', data: {{ json_encode($chartData['candidatures']) }}, backgroundColor: '#1e40af' }]
     },
     options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
 });

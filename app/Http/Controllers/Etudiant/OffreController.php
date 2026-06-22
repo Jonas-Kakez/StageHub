@@ -29,7 +29,8 @@ class OffreController extends Controller
         }
 
         $offre->load('entreprise');
+        $etudiant = auth()->user()->etudiant;
 
-        return view('etudiant.offres.show', compact('offre'));
+        return view('etudiant.offres.show', compact('offre', 'etudiant'));
     }
 }

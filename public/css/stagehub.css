@@ -1,9 +1,13 @@
 :root {
-    --stagehub-primary: #7c3aed;
-    --stagehub-primary-dark: #6d28d9;
-    --stagehub-blue: #2563eb;
-    --stagehub-green: #16a34a;
-    --stagehub-bg: #f1f5f9;
+    --udbl-blue: #1e40af;
+    --udbl-blue-dark: #1e3a8a;
+    --udbl-blue-light: #dbeafe;
+    --udbl-green: #15803d;
+    --stagehub-primary: var(--udbl-blue);
+    --stagehub-primary-dark: var(--udbl-blue-dark);
+    --stagehub-blue: var(--udbl-blue);
+    --stagehub-green: var(--udbl-green);
+    --stagehub-bg: #f0f4f8;
     --stagehub-text: #1e293b;
     --stagehub-muted: #64748b;
 }
@@ -14,34 +18,23 @@ body {
     color: var(--stagehub-text);
 }
 
-.btn-stagehub {
-    background-color: var(--stagehub-primary);
-    border-color: var(--stagehub-primary);
+.btn-stagehub, .btn-stagehub-blue {
+    background-color: var(--udbl-blue);
+    border-color: var(--udbl-blue);
     color: #fff;
     border-radius: 0.5rem;
     padding: 0.5rem 1.25rem;
 }
 
-.btn-stagehub:hover {
-    background-color: var(--stagehub-primary-dark);
-    border-color: var(--stagehub-primary-dark);
-    color: #fff;
-}
-
-.btn-stagehub-blue {
-    background-color: var(--stagehub-blue);
-    border-color: var(--stagehub-blue);
-    color: #fff;
-}
-
-.btn-stagehub-blue:hover {
-    background-color: #1d4ed8;
+.btn-stagehub:hover, .btn-stagehub-blue:hover {
+    background-color: var(--udbl-blue-dark);
+    border-color: var(--udbl-blue-dark);
     color: #fff;
 }
 
 .btn-stagehub-green {
-    background-color: var(--stagehub-green);
-    border-color: var(--stagehub-green);
+    background-color: var(--udbl-green);
+    border-color: var(--udbl-green);
     color: #fff;
 }
 
@@ -58,42 +51,73 @@ body {
     margin-bottom: 0.25rem;
 }
 
-.sidebar-nav .nav-link.active {
-    background-color: #ede9fe;
-    color: var(--stagehub-primary);
+.sidebar-nav .nav-link.active,
+.sidebar-nav .nav-link.active-blue {
+    background-color: var(--udbl-blue-light);
+    color: var(--udbl-blue);
     font-weight: 500;
 }
 
 .sidebar-nav .nav-link.active-green {
     background-color: #dcfce7;
-    color: var(--stagehub-green);
+    color: var(--udbl-green);
 }
 
-.sidebar-nav .nav-link.active-blue {
-    background-color: #dbeafe;
-    color: var(--stagehub-blue);
-}
-
-.badge-status-en_attente { background: #fef3c7; color: #92400e; }
-.badge-status-acceptee, .badge-status-validee, .badge-status-active { background: #dcfce7; color: #166534; }
+.badge-status-en_attente, .badge-status-transmise { background: #fef3c7; color: #92400e; }
+.badge-status-acceptee, .badge-status-validee, .badge-status-active, .badge-status-approuve { background: #dcfce7; color: #166534; }
 .badge-status-refusee { background: #fee2e2; color: #991b1b; }
 .badge-status-en_stage { background: #dbeafe; color: #1e40af; }
 .badge-status-en_recherche { background: #fef3c7; color: #92400e; }
-.badge-status-stage_termine { background: #dcfce7; color: #166534; }
+.badge-status-stage_termine, .badge-status-soumis { background: #dcfce7; color: #166534; }
 
-.hero-section {
-    padding: 4rem 0;
-    text-align: center;
+.navbar-stagehub {
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border-bottom: 3px solid var(--udbl-blue);
 }
 
-.feature-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
+.udbl-logo {
+    height: 42px;
+    width: auto;
+}
+
+.udbl-footer {
+    background: var(--udbl-blue);
+    color: #fff;
+    padding: 1rem 0;
+    margin-top: 3rem;
+    font-size: 0.85rem;
+}
+
+.offres-carousel {
+    overflow: hidden;
+    position: relative;
+}
+
+.offres-track {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
+    gap: 1rem;
+    animation: scroll-offres 30s linear infinite;
+    width: max-content;
+}
+
+.offres-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-offres {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.offre-slide {
+    min-width: 280px;
+    max-width: 280px;
+}
+
+.hero-section {
+    padding: 3rem 0;
+    text-align: center;
 }
 
 .profile-card {
@@ -107,36 +131,8 @@ body {
     box-shadow: 0 8px 25px rgba(0,0,0,0.1);
 }
 
-.auth-card {
-    max-width: 420px;
-    margin: 2rem auto;
-}
-
-.progress-stagehub {
-    height: 8px;
-    border-radius: 4px;
-    background-color: #e2e8f0;
-}
-
 .progress-stagehub .progress-bar {
-    background-color: var(--stagehub-primary);
+    background-color: var(--udbl-blue);
 }
 
-.navbar-stagehub {
-    background: #fff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-}
-
-.stat-card {
-    padding: 1.5rem;
-    border-radius: 1rem;
-}
-
-.stat-card .stat-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 0.75rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+.stat-card { padding: 1.5rem; border-radius: 1rem; }

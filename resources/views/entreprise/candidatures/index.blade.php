@@ -16,6 +16,11 @@
 
 @section('dashboard-content')
 <h4 class="fw-bold mb-4">Candidatures reçues</h4>
+<div class="row g-3 mb-4">
+    <div class="col-md-3"><div class="card card-stagehub stat-card text-center"><div class="fs-4 fw-bold">{{ $stats['total'] }}</div><div class="small text-muted">Total</div></div></div>
+    <div class="col-md-3"><div class="card card-stagehub stat-card text-center"><div class="fs-4 fw-bold">{{ $stats['transmises'] }}</div><div class="small text-muted">Transmises UDBL</div></div></div>
+    <div class="col-md-3"><div class="card card-stagehub stat-card text-center"><div class="fs-4 fw-bold">{{ $stats['acceptees'] }}</div><div class="small text-muted">Acceptées</div></div></div>
+</div>
 @foreach($candidatures as $c)
     <div class="card card-stagehub p-4 mb-3">
         <div class="d-flex justify-content-between align-items-start">
@@ -28,7 +33,7 @@
             </div>
             <span class="badge badge-status-{{ $c->statut }}">{{ str_replace('_', ' ', ucfirst($c->statut)) }}</span>
         </div>
-        @if($c->statut === 'en_attente')
+        @if($c->statut === 'transmise')
             <div class="d-flex gap-2 mt-3">
                 <a href="{{ route('entreprise.candidatures.cv', $c) }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-eye me-1"></i>Voir CV</a>
                 <form action="{{ route('entreprise.candidatures.accepter', $c) }}" method="POST">@csrf<button class="btn btn-success btn-sm"><i class="bi bi-check me-1"></i>Accepter</button></form>

@@ -16,6 +16,7 @@ class Affectation extends Model
         'entreprise_id',
         'offre_stage_id',
         'encadreur_id',
+        'departement_entreprise_id',
         'date_debut',
         'date_fin',
         'statut',
@@ -89,5 +90,19 @@ class Affectation extends Model
         }
 
         return (int) round(($debut->diffInDays($now) / $total) * 100);
+    }
+
+    public function estTermine(): bool
+    {
+        if ($this->statut === 'terminee') {
+            return true;
+        }
+
+        return $this->date_fin && Carbon::parse($this->date_fin)->lte(Carbon::now());
+    }
+
+    public function peutDeposerRapport(): bool
+    {
+        return $this->estTermine() || $this->progression() >= 100;
     }
 }

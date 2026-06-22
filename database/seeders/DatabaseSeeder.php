@@ -134,6 +134,7 @@ class DatabaseSeeder extends Seeder
             'domaine' => 'Informatique',
             'description' => 'Développement d\'applications web avec Laravel et React.',
             'competences_requises' => 'JavaScript, React, Node.js, PHP',
+            'quota_stagiaires' => 2,
             'statut' => 'active',
             'moderee' => true,
             'publie_le' => now()->subDays(10),

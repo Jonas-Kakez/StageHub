@@ -15,6 +15,7 @@ class Evaluation extends Model
         'commentaire',
         'criteres',
         'type',
+        'validee_institution',
     ];
 
     protected function casts(): array
@@ -22,6 +23,7 @@ class Evaluation extends Model
         return [
             'note' => 'decimal:2',
             'criteres' => 'array',
+            'validee_institution' => 'boolean',
         ];
     }
 

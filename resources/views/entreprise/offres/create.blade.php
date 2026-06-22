@@ -55,6 +55,10 @@
             <label class="form-label">Compétences requises</label>
             <input name="competences_requises" class="form-control" placeholder="Ex: JavaScript, React, Node.js...">
         </div>
+        <div class="mb-3">
+            <label class="form-label">Quota de stagiaires</label>
+            <input type="number" name="quota_stagiaires" class="form-control" value="1" min="1" required>
+        </div>
         <button type="submit" class="btn btn-stagehub"><i class="bi bi-plus me-1"></i>Publier l'offre</button>
     </form>
 </div>

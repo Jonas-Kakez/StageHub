@@ -1,15 +1,9 @@
 <nav class="navbar navbar-stagehub navbar-expand-lg">
     <div class="container">
-        <a href="{{ route('home') }}" class="text-muted small me-3"><i class="bi bi-arrow-left"></i> Retour</a>
-        <a class="navbar-brand fw-bold" href="#">
-            @if(($color ?? '') === 'purple')
-                <i class="bi bi-building me-2" style="color:#7c3aed;"></i>
-            @elseif(($color ?? '') === 'green')
-                <i class="bi bi-people-fill text-success me-2"></i>
-            @else
-                <i class="bi bi-mortarboard-fill text-primary me-2"></i>
-            @endif
-            {{ $title }}
+        <a href="{{ route('home') }}" class="text-muted small me-2"><i class="bi bi-arrow-left"></i> Retour</a>
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="#">
+            <img src="{{ asset('images/udbl-logo.png') }}" alt="UDBL" class="udbl-logo" style="height:32px;">
+            <span>{{ $title }}</span>
         </a>
         <div class="d-flex align-items-center gap-3">
             @php $unread = auth()->user()->appNotifications()->where('lu', false)->count(); @endphp

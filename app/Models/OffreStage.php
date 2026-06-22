@@ -18,8 +18,10 @@ class OffreStage extends Model
         'domaine',
         'description',
         'competences_requises',
+        'quota_stagiaires',
         'statut',
         'moderee',
+        'publiee_par_institution',
         'motif_refus',
         'publie_le',
     ];
@@ -28,7 +30,9 @@ class OffreStage extends Model
     {
         return [
             'moderee' => 'boolean',
+            'publiee_par_institution' => 'boolean',
             'publie_le' => 'datetime',
+            'quota_stagiaires' => 'integer',
         ];
     }
 
@@ -50,5 +54,21 @@ class OffreStage extends Model
     public function isActive(): bool
     {
         return $this->statut === 'active';
+    }
+
+    public function placesOccupees(): int
+    {
+        return $this->candidatures()->where('statut', 'acceptee')->count()
+            + $this->affectations()->where('statut', 'active')->count();
+    }
+
+    public function quotaAtteint(): bool
+    {
+        return $this->placesOccupees() >= $this->quota_stagiaires;
+    }
+
+    public function placesRestantes(): int
+    {
+        return max(0, $this->quota_stagiaires - $this->placesOccupees());
     }
 }

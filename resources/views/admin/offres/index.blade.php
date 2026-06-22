@@ -19,6 +19,7 @@
 
 @section('dashboard-content')
 <h4 class="fw-bold mb-4">Modération des offres</h4>
+<div class="mb-3"><a href="{{ route('admin.offres.create') }}" class="btn btn-stagehub-green btn-sm">+ Publier pour une entreprise</a></div>
 @foreach($offres as $offre)
     <div class="card card-stagehub p-4 mb-3">
         <div class="d-flex justify-content-between">

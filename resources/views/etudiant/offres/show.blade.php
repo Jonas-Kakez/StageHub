@@ -28,6 +28,11 @@
     @endif
 
     <hr>
+    @if(!$etudiant->peutPostuler())
+        <div class="alert alert-warning">Vous avez déjà été accepté dans une entreprise. Vous ne pouvez plus postuler.</div>
+    @elseif($offre->quotaAtteint())
+        <div class="alert alert-warning">Le quota de stagiaires pour cette offre est atteint.</div>
+    @else
     <h6 class="fw-bold">Postuler</h6>
     <form action="{{ route('etudiant.candidatures.store', $offre) }}" method="POST" enctype="multipart/form-data">
         @csrf
@@ -43,5 +48,6 @@
         </div>
         <button type="submit" class="btn btn-stagehub-blue">Envoyer candidature</button>
     </form>
+    @endif
 </div>
 @endsection

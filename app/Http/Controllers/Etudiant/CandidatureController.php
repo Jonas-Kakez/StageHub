@@ -10,7 +10,6 @@ use App\Models\User;
 use App\Services\NotificationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 
 class CandidatureController extends Controller
 {
@@ -33,16 +32,32 @@ class CandidatureController extends Controller
             return back()->with('error', 'Cette offre n\'est plus disponible.');
         }
 
+        if (! $etudiant->peutPostuler()) {
+            return back()->with('error', 'Vous avez déjà été accepté dans une entreprise. Vous ne pouvez plus postuler à d\'autres offres.');
+        }
+
+        if ($offre->quotaAtteint()) {
+            NotificationService::send(
+                $request->user(),
+                'quota_atteint',
+                'Quota atteint',
+                "Le quota de l'offre « {$offre->titre} » est atteint. Votre candidature ne peut pas être enregistrée.",
+                route('etudiant.offres.index')
+            );
+
+            return back()->with('error', 'Le quota de stagiaires pour cette offre est atteint.');
+        }
+
         if ($etudiant->candidatures()->where('offre_stage_id', $offre->id)->exists()) {
             return back()->with('error', 'Vous avez déjà candidaté à cette offre.');
         }
 
-        $validated = $request->validate([
+        $request->validate([
             'cv' => 'nullable|file|mimes:pdf|max:5120',
             'lettre_motivation' => 'nullable|file|mimes:pdf|max:5120',
         ]);
 
-        DB::transaction(function () use ($request, $etudiant, $offre, $validated) {
+        DB::transaction(function () use ($request, $etudiant, $offre) {
             $cvPath = $etudiant->cv_path;
             $lettrePath = $etudiant->lettre_motivation_path;
 
@@ -68,19 +83,22 @@ class CandidatureController extends Controller
                 'candidature_id' => $candidature->id,
                 'user_id' => $request->user()->id,
                 'action' => 'soumise',
-                'commentaire' => 'Candidature soumise',
+                'commentaire' => 'Candidature soumise — en attente de validation par le Bureau de stage UDBL',
             ]);
 
-            NotificationService::send(
-                $offre->entreprise->user,
-                'nouvelle_candidature',
-                'Nouvelle candidature',
-                "{$request->user()->name} a candidaté pour « {$offre->titre} ».",
-                route('entreprise.candidatures.index')
-            );
+            $admins = User::where('role', User::ROLE_ADMIN)->get();
+            foreach ($admins as $admin) {
+                NotificationService::send(
+                    $admin,
+                    'nouvelle_candidature',
+                    'Nouvelle candidature à examiner',
+                    "{$request->user()->name} a candidaté pour « {$offre->titre} ».",
+                    route('admin.candidatures.index')
+                );
+            }
         });
 
         return redirect()->route('etudiant.candidatures.index')
-            ->with('success', 'Candidature envoyée avec succès.');
+            ->with('success', 'Candidature envoyée. Elle sera transmise à l\'entreprise après validation par le Bureau de stage UDBL.');
     }
 }

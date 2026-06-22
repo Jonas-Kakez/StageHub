@@ -45,4 +45,21 @@ class Etudiant extends Model
     {
         return $this->hasMany(RapportStage::class);
     }
+
+    public function peutPostuler(): bool
+    {
+        if (in_array($this->statut, ['en_stage', 'stage_termine'], true)) {
+            return false;
+        }
+
+        return ! $this->candidatures()->where('statut', 'acceptee')->exists();
+    }
+
+    public function evaluationsValidees()
+    {
+        return Evaluation::whereHas('affectation', fn ($q) => $q->where('etudiant_id', $this->id))
+            ->where('validee_institution', true)
+            ->with(['affectation.offreStage', 'encadreur.user'])
+            ->get();
+    }
 }
